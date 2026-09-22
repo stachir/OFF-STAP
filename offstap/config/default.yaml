@@ -1,0 +1,88 @@
+version: "2.0"
+config_id: "offstap_default"
+random_seed: 42
+paths:
+  input_ev3: "data/ev3"
+  input_vrmt: "data/vrmt"
+  output_base: "outputs"
+  output_cleaned: "outputs/03_cleaned"
+  output_aligned: "outputs/13_integrated_logs"
+  output_schema: "outputs/02_schema"
+  output_plots: "outputs/18_plots"
+  output_provenance: "outputs/provenance"
+patterns:
+  filename_regex: '^(?P<drive_id>D\d+)_(?P<route_id>T\d+)_(?P<date>\d{4}-\d{2}-\d{2})_(?P<time>\d{2}-\d{2}-\d{2})_(?P<stream_type>ev3|vrmt)\.?\.csv$'
+schema:
+  ev3:
+    time_column: "time"
+    speed_column: "motor_speed"
+    angle_column: "motor_angle"
+    heading_column: "gyro_heading"
+    aliases:
+      "time_ms": "time"
+      " EV3 state speed": "motor_speed"
+      " EV3 state angle": "motor_angle"
+      " Gyro(deg)": "gyro_heading"
+  vrmt:
+    wall_time_column: "timestamp"
+    x_column: "x"
+    y_column: "y"
+    z_column: "z"
+    qx_column: "qx"
+    qy_column: "qy"
+    qz_column: "qz"
+    qw_column: "qw"
+    aliases:
+      "Time": "timestamp"
+      "PoseX": "x"
+      "PoseY": "y"
+      "PoseZ": "z"
+units:
+  ev3_time_to_s: 0.001
+  vrmt_time_to_s: 1.0
+  vrmt_pos_to_m: 1.0
+geometry:
+  lever_arm_offset_xyz: [0.005, 0.0, 0.10]
+  apply_lever_arm_correction: true
+  planar_projection_mode: "direct"
+  direct_map:
+    planar_x: "x"
+    planar_y: "z"
+  spatial_align_dist_m: 0.075
+  spatial_vrmt_flip_y: true
+  spatial_fit_method: "calibration_partition_rigid_se2"
+plotting:
+  max_per_scenario: 1
+quality:
+  min_rows: 50
+  min_duration_s: 5.0
+  max_timestamp_gap_s: 2.0
+  max_irregularity_index: 2.0
+calibration:
+  duration_s: 20.0
+  minimum_evaluation_duration_s: 5.0
+  min_linear_distance_m: 0.1
+  min_angular_change_deg: 10.0
+temporal:
+  cross_corr_window_s: 5.0
+  grid_step_s: 0.05
+  min_overlap_s: 1.0
+  min_correlation: 0.5
+  min_peak_separation_s: 1.0
+  min_peak_confidence_ratio: 1.2
+  ev3_onset_proxy: "motor_speed"
+  vrmt_onset_proxy: "speed_magnitude"
+clock_model:
+  affine_improvement_threshold_m: 0.05
+  scale_min: 0.95
+  scale_max: 1.05
+representation:
+  continuous_type: "spline"
+  query_rate_hz: 60.0
+metrics:
+  trimmed_percentile: 90
+  huber_delta: 0.1
+  outlier_threshold_m: 0.5
+  rpe_target_interval_s: 1.0
+  rpe_tolerance_s: 0.02
+  rpe_default_sample_interval_s: 0.1

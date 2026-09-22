@@ -1,0 +1,40 @@
+# User data and generated runs
+data/
+outputs/
+output/
+results/
+
+# Python environments and build products
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_tmp/
+.coverage
+htmlcov/
+
+# Local configuration, credentials, and secrets
+.env
+.env.*
+!.env.example
+*.local.yaml
+*.local.yml
+secrets.*
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+~$*
