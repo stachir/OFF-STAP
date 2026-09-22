@@ -4,6 +4,10 @@ OFF-STAP is a failure-explicit command-line application for auditable offline sp
 
 This repository contains the curated public application. It does not contain the private development history, manuscript-working files, generated study outputs, or raw experimental logs. The original logs will be published separately by the authors; no dataset URL is stated here until that repository or deposition has a stable public address.
 
+## Dataset
+
+[Dataset used in the papers](https://drive.google.com/file/d/1xlMsEF-GdieZQWt7XU9dRHyMjt5BoAzV/view?usp=sharing)
+
 ## Scientific scope and limitations
 
 The packaged configuration reproduces the approved OFF-STAP processing contract. A custom configuration may change operational paths and its `config_id`, but the application rejects changes to scientific parameters. This prevents an altered threshold or method from being presented as the same analysis.
