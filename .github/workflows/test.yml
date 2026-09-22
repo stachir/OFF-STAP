@@ -24,7 +24,9 @@ jobs:
           python-version: '3.14'
           cache: pip
       - name: Install package and tests
-        run: python -m pip install . pytest
+        run: |
+          python -m pip install --upgrade "setuptools>=80" wheel
+          python -m pip install . pytest
       - name: Verify module and installed CLI
         run: |
           python -m offstap --help
